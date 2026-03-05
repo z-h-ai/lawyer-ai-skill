@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>律师客户分析报告 · 演进总览</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --primary: #1a1a2e;
+      --accent: #0066cc;
+      --accent-light: #e0efff;
+      --accent2: #28a745;
+      --surface: #ffffff;
+      --surface2: #f7f8fc;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text2: #64748b;
+      --radius: 12px;
+      --tag-blue: #dbeafe;
+      --tag-green: #dcfce7;
+      --tag-yellow: #fef9c3;
+      --tag-purple: #ede9fe;
+      --tag-red: #fee2e2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--surface2);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HERO HEADER ── */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 56px 48px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(0, 102, 204, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(96, 165, 250, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      color: #93c5fd;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(147, 197, 253, 0.2);
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      margin: 48px auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .section-header .num {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* ── MERMAID DIAGRAM ── */
+    .diagram-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    .diagram-wrap .mermaid {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ── VERSION CARDS ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: 24px 0;
+    }
+
+    .version-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .version-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .version-card.highlight {
+      border-color: var(--accent);
+      border-width: 3px;
+      box-shadow: 0 4px 20px rgba(0, 102, 204, 0.12);
+      position: relative;
+    }
+
+    .version-card.highlight::after {
+      content: '★ 完整版';
+      position: absolute;
+      top: 14px;
+      right: -28px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 32px;
+      transform: rotate(45deg);
+    }
+
+    .card-top {
+      padding: 24px 24px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-top .version-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .v1-tag {
+      background: var(--tag-yellow);
+      color: #854d0e;
+    }
+
+    .v2-tag {
+      background: var(--tag-purple);
+      color: #5b21b6;
+    }
+
+    .v3-tag {
+      background: var(--tag-blue);
+      color: var(--accent);
+    }
+
+    .card-top h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .card-top .card-subtitle {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    .card-body {
+      padding: 20px 24px;
+      flex: 1;
+    }
+
+    .card-body ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card-body ul li {
+      font-size: 13.5px;
+      color: var(--text);
+      line-height: 1.6;
+      padding: 6px 0 6px 20px;
+      position: relative;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .card-body ul li:last-child {
+      border-bottom: none;
+    }
+
+    .card-body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 13px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .version-card.v1-card .card-body ul li::before {
+      background: #f59e0b;
+    }
+
+    .version-card.v2-card .card-body ul li::before {
+      background: #7c3aed;
+    }
+
+    .version-card.v3-card .card-body ul li::before {
+      background: var(--accent);
+    }
+
+    .card-body ul li .new-badge {
+      display: inline-block;
+      background: var(--tag-green);
+      color: #15803d;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 8px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .card-footer {
+      padding: 16px 24px 24px;
+    }
+
+    .card-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border: 2px solid var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #0052a3;
+      border-color: #0052a3;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    }
+
+    /* ── BOTTOM QUOTE ── */
+    .bottom-quote {
+      background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      margin: 48px 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bottom-quote::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-size: 120px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.05);
+      line-height: 1;
+      font-family: Georgia, serif;
+    }
+
+    .bottom-quote blockquote {
+      font-size: 16px;
+      color: #e2e8f0;
+      line-height: 1.8;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bottom-quote .quote-source {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #64748b;
+      font-style: normal;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text2);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero {
+        padding: 40px 24px 36px;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .container {
+        padding: 0 20px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .version-card.highlight::after {
+        right: -32px;
+        top: 12px;
+      }
+
+      .bottom-quote {
+        padding: 28px 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 20px;
+      }
+
+      .hero p {
+        font-size: 13px;
+      }
+
+      .section-header h2 {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── TOP NAV ── -->
+  <div style="background:rgba(26,26,46,0.95);border-bottom:1px solid rgba(255,255,255,0.08);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);">
+    <a href="律师行业AI-Skill产品定义-V2.html" style="color:#93c5fd;text-decoration:none;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;padding:6px 16px;border-radius:8px;border:1px solid rgba(147,197,253,0.2);transition:all .2s;">
+      ← 查看 Skill 产品介绍
+    </a>
+    <span style="color:#64748b;font-size:12px;font-weight:600;">📊 客户分析报告</span>
+  </div>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <span class="hero-badge">📊 周周黑客松 · 2602102B</span>
+    <h1>律师客户分析报告 · 演进总览</h1>
+    <p>基于刘律师团队现场访谈录音，从 2 段到 7 段、从基础画像到完整洞察，<br>三个版本逐层深入的分析演进。</p>
+  </header>
+
+  <div class="container">
+
+    <!-- ── 演进路径 ── -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">1</div>
+        <h2>版本演进路径</h2>
+      </div>
+      <div class="diagram-wrap">
+        <div class="mermaid">
+graph LR
+  V1["🟡 V1<br/>基于 2 段录音<br/>基础版"]
+  V2["🟣 V2<br/>第一性原理重构<br/>+ mermaid 图表"]
+  V3["🔵 V3<br/>全部 7 段录音<br/>4h50min · 完整版"]
+
+  V1 -->|"深层逻辑<br/>框架升级"| V2
+  V2 -->|"数据量 ×3.5<br/>全面补充"| V3
+
+  style V1 fill:#fef9c3,stroke:#f59e0b,stroke-width:2px,color:#854d0e
+  style V2 fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+  style V3 fill:#dbeafe,stroke:#0066cc,stroke-width:3px,color:#0066cc
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 版本卡片 ── -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">2</div>
+        <h2>各版本详情</h2>
+      </div>
+
+      <div class="cards-grid">
+
+        <!-- V1 -->
+        <div class="version-card v1-card">
+          <div class="card-top">
+            <span class="version-tag v1-tag">V1 基础版</span>
+            <h3>基础客户画像</h3>
+            <div class="card-subtitle">基于 2 段录音 · 初步定义</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>基于现场 2 段录音（文字沟通 + 合同起草审核）</li>
+              <li>三位律师的基本画像和 AI 使用现状</li>
+              <li>6 个 Skill 初步定义</li>
+              <li>问卷评分 35 分（高度匹配）</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a href="律师客户分析报告V1.html" class="card-btn btn-outline">查看 V1 报告 →</a>
+          </div>
+        </div>
+
+        <!-- V2 -->
+        <div class="version-card v2-card">
+          <div class="card-top">
+            <span class="version-tag v2-tag">V2 第一性原理版</span>
+            <h3>深层逻辑重构</h3>
+            <div class="card-subtitle">框架升级 · 可视化增强</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>新增"律师的时间去哪了"第一性原理分析框架</li>
+              <li>客户画像增加心理动机和深层逻辑</li>
+              <li>引入 mermaid 流程图可视化需求流和赋能地图</li>
+              <li>需求按频率×痛苦度排序形成优先级矩阵</li>
+              <li>竞品对比细化（阿尔法 vs 豆包 vs 我们）</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a href="律师客户分析报告V2.html" class="card-btn btn-outline">查看 V2 报告 →</a>
+          </div>
+        </div>
+
+        <!-- V3 -->
+        <div class="version-card v3-card highlight">
+          <div class="card-top">
+            <span class="version-tag v3-tag">V3 完整版</span>
+            <h3>全量录音深度洞察</h3>
+            <div class="card-subtitle">7 段录音 · 4 小时 50 分钟</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>基于全部 7 段录音（共 4 小时 50 分钟）综合分析</li>
+              <li>律师心理障碍洞察（"标准化=贬值"）<span class="new-badge">新增</span></li>
+              <li>365天普法卡片 = 杀手级入口产品（S7）<span class="new-badge">新增</span></li>
+              <li>竞品认知全景（阿尔法/豆包/元宝/市面卡片）<span class="new-badge">新增</span></li>
+              <li>产品策略核心结论——先卖产品、再卖工作坊<span class="new-badge">新增</span></li>
+              <li>客户分类框架（OPC/互联网/国企/合作方）<span class="new-badge">新增</span></li>
+              <li>谈案报价方案需求（V1/V2 未覆盖的全新场景）<span class="new-badge">新增</span></li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a href="律师客户分析报告V3.html" class="card-btn btn-primary">查看 V3 完整报告 →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── BOTTOM QUOTE ── -->
+    <div class="bottom-quote">
+      <blockquote>
+        "线上讨论完就能形成这个报告——从 V1 到 V3，每多聊一轮，洞察就多一层。这就是 AI 赋能的速度。"
+      </blockquote>
+      <div class="quote-source">—— 周周黑客松 · AI 赋能律师行业</div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>周周黑客松 2602102B · 律师行业 AI 赋能项目 · 2025.03</p>
+  </footer>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#dbeafe',
+        primaryTextColor: '#1e293b',
+        primaryBorderColor: '#0066cc',
+        lineColor: '#64748b',
+        secondaryColor: '#ede9fe',
+        tertiaryColor: '#fef9c3',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif',
+        fontSize: '13px'
+      },
+      flowchart: {
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 60,
+        rankSpacing: 80
+      }
+    });
+  </script>
+
+</body>
+
+</html>

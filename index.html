@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>律师行业 AI Skill · 智回AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif;
+            background: #0f172a; color: #e2e8f0;
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 40px 24px;
+        }
+        .badge {
+            display: inline-block; background: rgba(99,102,241,.15);
+            border: 1px solid rgba(99,102,241,.3); border-radius: 20px;
+            padding: 5px 16px; font-size: 12px; color: #818cf8; font-weight: 600;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: clamp(28px, 5vw, 42px); font-weight: 800;
+            text-align: center; line-height: 1.3; margin-bottom: 12px;
+        }
+        h1 em { font-style: normal; color: #fbbf24; }
+        .sub { font-size: 15px; color: #94a3b8; text-align: center; margin-bottom: 48px; max-width: 500px; line-height: 1.7; }
+        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 640px; width: 100%; }
+        .card {
+            background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+            border-radius: 16px; padding: 32px 24px; text-align: center;
+            text-decoration: none; color: #e2e8f0;
+            transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .card:hover {
+            transform: translateY(-6px); background: rgba(255,255,255,.08);
+            box-shadow: 0 16px 48px rgba(0,0,0,.3); border-color: rgba(255,255,255,.2);
+        }
+        .card .icon { font-size: 40px; margin-bottom: 16px; display: block; }
+        .card h2 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+        .card p { font-size: 13px; color: #94a3b8; line-height: 1.5; }
+        .card .arrow { display: inline-block; margin-top: 16px; font-size: 13px; font-weight: 600; color: #818cf8; }
+        .footer { margin-top: 56px; font-size: 12px; color: #475569; text-align: center; }
+        @media (max-width: 500px) { .cards { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <span class="badge">周周黑客松 · 2602102B</span>
+    <h1>律师行业 <em>AI Skill</em></h1>
+    <p class="sub">AI 赋能律师日常工作流——文字沟通、合同起草审核、获客推广<br>买来即用 · 越用越懂你 · 数据归你所有</p>
+
+    <div class="cards">
+        <a href="律师行业AI-Skill产品定义-V2.html" class="card">
+            <span class="icon">🚀</span>
+            <h2>AI Skill 产品定义</h2>
+            <p>8 个 AI Skill 的完整产品定义、合作路径与客户画像</p>
+            <span class="arrow">查看详情 →</span>
+        </a>
+        <a href="客户分析报告总览.html" class="card">
+            <span class="icon">📊</span>
+            <h2>客户分析报告</h2>
+            <p>基于 7 段现场录音的三版客户深度洞察报告</p>
+            <span class="arrow">查看详情 →</span>
+        </a>
+    </div>
+
+    <div class="footer">智回AI · 律师行业 AI 赋能项目 · 2025.03</div>
+</body>
+</html>

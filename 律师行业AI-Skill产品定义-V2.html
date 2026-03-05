@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>律师行业 AI Skill 产品定义 V2</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text1: #1e293b;
+            --text2: #64748b;
+            --text3: #94a3b8;
+            --border: #e2e8f0;
+            --primary: #4f46e5;
+            --primary-light: #e0e7ff;
+            --r: 16px;
+            --sh: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+            --sh-lg: 0 10px 25px rgba(0,0,0,.08);
+            --nav-h: 56px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+        body {
+            font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg); color: var(--text1); line-height: 1.7; font-size: 15px;
+        }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+        /* ═══ 导航栏 ═══ */
+        .nav-bar {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            height: var(--nav-h); display: flex; align-items: center;
+            padding: 0 24px; transition: box-shadow .3s;
+        }
+        .nav-bar.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+        .nav-inner {
+            max-width: 960px; margin: 0 auto; width: 100%;
+            display: flex; align-items: center; gap: 6px;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+        }
+        .nav-inner::-webkit-scrollbar { display: none; }
+        .nav-brand { font-size: 14px; font-weight: 800; color: var(--primary); white-space: nowrap; margin-right: 12px; flex-shrink: 0; }
+        .nav-link {
+            font-size: 13px; font-weight: 600; color: var(--text2);
+            text-decoration: none; padding: 6px 14px; border-radius: 20px;
+            white-space: nowrap; transition: all .2s; flex-shrink: 0;
+        }
+        .nav-link:hover { background: var(--primary-light); color: var(--primary); }
+        .nav-link.active { background: var(--primary); color: #fff; }
+        .nav-link.nav-ext {
+            margin-left: auto; background: #f0f9ff; color: #0369a1;
+            border: 1px solid #bae6fd;
+        }
+        .nav-link.nav-ext:hover { background: #0369a1; color: #fff; border-color: #0369a1; }
+
+        /* ═══ Hero ═══ */
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b, #312e81 40%, #4338ca);
+            color: #fff; padding: 60px 24px 48px; text-align: center;
+        }
+        .hero .kicker {
+            display: inline-block; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+            border-radius: 20px; padding: 4px 16px; font-size: 12px; color: #c7d2fe; margin-bottom: 20px;
+        }
+        .hero h1 { font-size: clamp(24px,5vw,36px); font-weight: 800; line-height: 1.3; margin-bottom: 16px; }
+        .hero h1 em { font-style: normal; color: #fbbf24; }
+        .hero .sub { font-size: 15px; color: #a5b4fc; max-width: 640px; margin: 0 auto 24px; }
+        .hero .principle { display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .hero .principle span {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+            border-radius: 10px; padding: 8px 18px; font-size: 13px; font-weight: 600; color: #e0e7ff;
+        }
+
+        /* ═══ Section ═══ */
+        .sec { padding: 48px 0; }
+        .sec+.sec { border-top: 1px solid var(--border); }
+        .sec-header { margin-bottom: 32px; }
+        .sec-header .num {
+            display: inline-flex; width: 32px; height: 32px; background: var(--primary); color: #fff;
+            border-radius: 8px; align-items: center; justify-content: center; font-weight: 800;
+            font-size: 14px; margin-right: 10px; vertical-align: middle;
+        }
+        .sec-header h2 { display: inline; font-size: 22px; font-weight: 800; vertical-align: middle; }
+        .sec-header p { margin-top: 8px; color: var(--text2); font-size: 14px; max-width: 640px; }
+
+        /* ═══ 定义 Box ═══ */
+        .def-box {
+            background: var(--card); border: 2px solid var(--primary); border-radius: var(--r);
+            padding: 32px; box-shadow: var(--sh-lg); text-align: center; margin-bottom: 32px;
+        }
+        .def-box .big-quote { font-size: 18px; font-weight: 700; line-height: 1.6; margin-bottom: 16px; }
+        .def-box .big-quote em { font-style: normal; color: var(--primary); }
+        .def-box .sub-text { font-size: 14px; color: var(--text2); max-width: 560px; margin: 0 auto; }
+
+        .form-table { width: 100%; background: var(--card); border-radius: var(--r); box-shadow: var(--sh); border-collapse: collapse; overflow: hidden; margin-bottom: 24px; }
+        .form-table th, .form-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
+        .form-table th { background: #f1f5f9; font-weight: 700; color: var(--text2); width: 140px; white-space: nowrap; }
+        .form-table tr:last-child td, .form-table tr:last-child th { border-bottom: none; }
+
+        /* ═══ 产品线总览 ═══ */
+        .overview-wrap {
+            background: var(--card); border-radius: var(--r); box-shadow: var(--sh);
+            padding: 32px 24px; margin-bottom: 24px;
+        }
+        .overview-core { text-align: center; margin-bottom: 28px; }
+        .overview-core .core-node {
+            display: inline-block; background: linear-gradient(135deg, #312e81, #4338ca);
+            color: #fff; padding: 14px 32px; border-radius: 14px;
+            font-size: 15px; font-weight: 700; box-shadow: 0 4px 16px rgba(67,56,202,.25);
+        }
+        .overview-core .core-node small { display: block; font-size: 12px; font-weight: 400; color: #c7d2fe; margin-top: 4px; }
+        .overview-core .arrow-down {
+            display: block; margin: 12px auto; width: 2px; height: 28px; background: var(--border); position: relative;
+        }
+        .overview-core .arrow-down::after {
+            content: ''; position: absolute; bottom: -4px; left: -4px;
+            border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--border);
+        }
+        .overview-scenes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .scene-group { border-radius: 14px; padding: 16px; }
+        .scene-group h4 { font-size: 13px; font-weight: 800; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid rgba(0,0,0,.06); }
+        .scene-skills { display: flex; flex-direction: column; gap: 8px; }
+        .scene-skill {
+            padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            transition: transform .2s, box-shadow .2s; cursor: default;
+        }
+        .scene-skill:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+        .scene-skill .skill-id {
+            font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 6px;
+            background: rgba(255,255,255,.7); flex-shrink: 0;
+        }
+        .scene-skill.featured {
+            padding: 14px; font-size: 14px; position: relative; overflow: hidden;
+        }
+        .scene-skill.featured::after {
+            content: '🔥 首推'; position: absolute; top: 6px; right: 8px;
+            font-size: 10px; font-weight: 800; background: rgba(255,255,255,.8);
+            padding: 2px 8px; border-radius: 8px;
+        }
+        .sg-brand { background: #fdf2f8; }
+        .sg-brand h4 { color: #be185d; }
+        .sg-deliver { background: #ecfdf5; }
+        .sg-deliver h4 { color: #047857; }
+        .sg-acquire { background: #f5f3ff; }
+        .sg-acquire h4 { color: #6d28d9; }
+        .sk-s7 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d; }
+        .sk-s1 { background: #dbeafe; color: #1d4ed8; }
+        .sk-s3 { background: #d1fae5; color: #065f46; }
+        .sk-s4 { background: #fef3c7; color: #92400e; }
+        .sk-s6 { background: #ccfbf1; color: #115e59; }
+        .sk-s5a { background: #ede9fe; color: #5b21b6; }
+        .sk-s5b { background: #f3e8ff; color: #7e22ce; }
+        .sk-s2 { background: #f1f5f9; color: #475569; }
+
+        /* ═══ Skill 双列卡片 — 简洁单色系 ═══ */
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        .skill-card {
+            background: var(--card); border-radius: var(--r); box-shadow: var(--sh);
+            border-top: 4px solid var(--border);
+            overflow: hidden; transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+            display: flex; flex-direction: column; position: relative;
+        }
+        .skill-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.05);
+        }
+        .skill-card .card-icon {
+            position: absolute; top: 16px; right: 20px;
+            font-size: 36px; line-height: 1; opacity: .85;
+        }
+        .skill-card .card-top { padding: 22px 24px 14px; }
+        .skill-card .card-tag {
+            display: inline-block; font-size: 11px; font-weight: 700;
+            padding: 3px 10px; border-radius: 12px; margin-bottom: 8px;
+        }
+        .skill-card .card-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; padding-right: 44px; }
+        .skill-card .card-desc { font-size: 13px; color: var(--text2); line-height: 1.5; padding-right: 44px; }
+        .skill-card .card-body { padding: 0 24px 20px; flex: 1; }
+        .skill-card .card-body ul {
+            list-style: none; padding: 0; margin: 0;
+        }
+        .skill-card .card-body ul li {
+            font-size: 13px; color: var(--text2); padding: 5px 0 5px 18px;
+            position: relative; line-height: 1.5;
+        }
+        .skill-card .card-body ul li::before {
+            content: ''; position: absolute; left: 0; top: 11px;
+            width: 6px; height: 6px; border-radius: 50%;
+        }
+        .skill-card .card-body ul li strong { color: var(--text1); font-weight: 600; }
+        .skill-card .card-diff {
+            margin-top: 10px; padding: 10px 14px; border-radius: 10px;
+            font-size: 12px; line-height: 1.6; font-weight: 500;
+        }
+        .skill-card .card-footer {
+            padding: 12px 24px; border-top: 1px solid var(--border);
+            display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: auto;
+            background: #fafbfc;
+        }
+        .card-status {
+            font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+        }
+        .st-done { background: #dcfce7; color: #166534; }
+        .st-demo { background: #dbeafe; color: #1e40af; }
+        .st-plan { background: #f1f5f9; color: #64748b; }
+        .card-meta { font-size: 11px; color: var(--text3); margin-left: auto; }
+
+        /* Featured card (S7) */
+        .skill-card.card-featured {
+            grid-column: 1 / -1; border-top-width: 5px;
+        }
+        .skill-card.card-featured .card-top { padding: 26px 28px 16px; }
+        .skill-card.card-featured .card-body { padding: 0 28px 22px; }
+        .skill-card.card-featured .card-footer { padding: 14px 28px; }
+        .skill-card.card-featured .card-icon { top: 20px; right: 24px; font-size: 44px; }
+        .skill-card.card-featured .card-title { font-size: 20px; }
+        .sc-hot {
+            display: inline-block; font-size: 12px; font-weight: 700;
+            padding: 6px 14px; border-radius: 8px; margin-top: 8px;
+        }
+
+        /* ── 每个 Skill 的颜色 ── */
+        .c-s7  { --c: #e11d48; --cbg: #fff1f2; --cdot: #fb7185; }
+        .c-s1  { --c: #2563eb; --cbg: #eff6ff; --cdot: #60a5fa; }
+        .c-s5a { --c: #7c3aed; --cbg: #f5f3ff; --cdot: #a78bfa; }
+        .c-s3  { --c: #059669; --cbg: #ecfdf5; --cdot: #34d399; }
+        .c-s4  { --c: #d97706; --cbg: #fffbeb; --cdot: #fbbf24; }
+        .c-s5b { --c: #8b5cf6; --cbg: #faf5ff; --cdot: #c084fc; }
+        .c-s6  { --c: #0d9488; --cbg: #f0fdfa; --cdot: #2dd4bf; }
+        .c-s2  { --c: #6366f1; --cbg: #eef2ff; --cdot: #818cf8; }
+
+        .skill-card.c-s7  { border-top-color: var(--c); }
+        .skill-card.c-s1  { border-top-color: var(--c); }
+        .skill-card.c-s5a { border-top-color: var(--c); }
+        .skill-card.c-s3  { border-top-color: var(--c); }
+        .skill-card.c-s4  { border-top-color: var(--c); }
+        .skill-card.c-s5b { border-top-color: var(--c); }
+        .skill-card.c-s6  { border-top-color: var(--c); }
+        .skill-card.c-s2  { border-top-color: var(--c); }
+
+        .skill-card .card-tag { background: var(--cbg); color: var(--c); }
+        .skill-card .card-title { color: var(--c); }
+        .skill-card .card-body ul li::before { background: var(--cdot); }
+        .skill-card .card-diff { background: var(--cbg); color: var(--c); }
+
+        /* ═══ 其他模块 ═══ */
+        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .pkg-card { background: var(--card); border-radius: var(--r); box-shadow: var(--sh); padding: 24px 20px; border-top: 4px solid var(--primary); display: flex; flex-direction: column; }
+        .pkg-card.pkg-highlight { border-top-color: #7c3aed; }
+        .pkg-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+        .pkg-card .pkg-sub { font-size: 13px; color: var(--text2); margin-bottom: 12px; }
+        .pkg-card ul { list-style: none; margin: 0; padding: 0; flex: 1; }
+        .pkg-card ul li { font-size: 13px; color: var(--text2); padding: 4px 0 4px 18px; position: relative; line-height: 1.5; }
+        .pkg-card ul li::before { content: '✓'; position: absolute; left: 0; color: #059669; font-weight: 700; font-size: 12px; }
+
+        .persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .persona-card { background: var(--card); border-radius: var(--r); box-shadow: var(--sh); padding: 24px; }
+        .persona-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 10px; }
+        .persona-card ul { list-style: none; padding: 0; }
+        .persona-card ul li { font-size: 13px; padding: 4px 0 4px 22px; position: relative; color: var(--text2); line-height: 1.6; }
+        .persona-yes li::before { content: '✅'; position: absolute; left: 0; font-size: 12px; }
+        .persona-no li::before { content: '❌'; position: absolute; left: 0; font-size: 12px; }
+
+        .sales-quote {
+            background: linear-gradient(135deg, #1e1b4b, #312e81); color: #fff; border-radius: var(--r);
+            padding: 36px 32px; text-align: center; margin-top: 32px;
+        }
+        .sales-quote .sq-label { font-size: 12px; color: #a5b4fc; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px; }
+        .sales-quote blockquote { font-size: 17px; font-weight: 600; line-height: 1.8; font-style: normal; color: #e0e7ff; }
+        .sales-quote blockquote strong { color: #fbbf24; font-weight: 800; }
+
+        /* CTA 跳转模块 */
+        .cta-box {
+            background: linear-gradient(135deg, #0c4a6e, #0369a1); border-radius: var(--r);
+            padding: 32px; display: flex; align-items: center; justify-content: space-between;
+            gap: 24px; margin-top: 32px; color: #fff;
+        }
+        .cta-box .cta-text h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+        .cta-box .cta-text p { font-size: 14px; color: #bae6fd; }
+        .cta-btn {
+            display: inline-block; background: #fff; color: #0369a1;
+            font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 10px;
+            text-decoration: none; white-space: nowrap; transition: all .2s; flex-shrink: 0;
+        }
+        .cta-btn:hover { background: #f0f9ff; box-shadow: 0 4px 16px rgba(0,0,0,.2); transform: translateY(-2px); }
+
+        .survey-section { margin-top: 32px; }
+        .survey-q { background: var(--card); border-radius: var(--r); box-shadow: var(--sh); padding: 20px 24px; margin-bottom: 12px; }
+        .survey-q .q-num { display: inline-flex; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin-right: 10px; flex-shrink: 0; }
+        .survey-q .q-text { font-size: 14px; font-weight: 600; }
+        .survey-q .q-options { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .survey-q .q-opt { font-size: 12px; padding: 6px 14px; border-radius: 20px; background: #f1f5f9; color: var(--text2); border: 1px solid var(--border); }
+        .survey-q .q-open { margin-top: 10px; font-size: 12px; color: var(--text3); font-style: italic; }
+
+        .footer { text-align: center; padding: 32px 20px; font-size: 12px; color: var(--text3); border-top: 1px solid var(--border); margin-top: 24px; }
+
+        @media (max-width: 700px) {
+            .hero { padding: 40px 20px 36px; }
+            .hero h1 { font-size: 22px; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .skill-card.card-featured { grid-column: auto; }
+            .overview-scenes { grid-template-columns: 1fr; }
+            .pkg-grid, .persona-grid { grid-template-columns: 1fr; }
+            .form-table th { width: 100px; }
+            .nav-brand { display: none; }
+            .cta-box { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ 导航栏 ═══ -->
+    <nav class="nav-bar" id="navBar">
+        <div class="nav-inner">
+            <span class="nav-brand">AI Skill</span>
+            <a href="#sec-what" class="nav-link">产品是什么</a>
+            <a href="#sec-overview" class="nav-link">产品线总览</a>
+            <a href="#sec-skills" class="nav-link">Skill 定义</a>
+            <a href="#sec-paths" class="nav-link">合作路径</a>
+            <a href="#sec-persona" class="nav-link">客户画像</a>
+            <a href="#sec-survey" class="nav-link">现场调研</a>
+            <a href="客户分析报告总览.html" class="nav-link nav-ext">📊 客户分析报告 →</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="kicker">产品定义文档 V2 · 周五活动用</div>
+        <h1>律师行业 <em>AI Skill</em> 产品定义</h1>
+        <p class="sub">比豆包更懂你——接入你的数据库、学习你的风格<br>买来即用 · 越用越懂你 · 数据归你所有</p>
+        <div class="principle">
+            <span>🎯 买来即用（零学习成本）</span>
+            <span>⚡ 越用越懂你（接入个人数据库）</span>
+            <span>🔒 数据 100% 归客户所有</span>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ═══ 一、产品是什么 ═══ -->
+        <section class="sec" id="sec-what">
+            <div class="sec-header">
+                <span class="num">一</span>
+                <h2>产品是什么</h2>
+            </div>
+            <div class="def-box">
+                <div class="big-quote">
+                    律师 AI Skill = 一个经过律师行业调优的、<br>
+                    <em>拿来就能干活</em>的 AI 工作流
+                </div>
+                <div class="sub-text">
+                    不是通用 AI 工具（那是豆包），不是法律数据库（那是阿尔法），<br>
+                    而是——<strong>知道你是谁、知道你的客户、知道你的风格</strong>的专属 AI 助手。
+                </div>
+            </div>
+            <table class="form-table">
+                <tr><th>交付物</th><td>一个可运行的 AI Skill（部署在微信 / 网页工作台中）</td></tr>
+                <tr><th>使用方式</th><td>律师把材料丢进去 → AI 输出结果 → 律师确认/微调 → 完成</td></tr>
+                <tr><th>数据归属</th><td>100% 属于律师，不上传第三方，代码交付后归客户所有</td></tr>
+                <tr><th>迭代方式</th><td>越用越懂你——AI 会积累你的使用偏好和反馈</td></tr>
+                <tr><th>学习成本</th><td>对客户：零门槛，会用微信就能用</td></tr>
+            </table>
+            <div style="background:var(--primary-light);border-radius:var(--r);padding:18px 24px;font-size:14px;">
+                <strong style="color:var(--primary);">为什么叫"Skill"？</strong>
+                <span style="color:var(--text2);">
+                    "产品"听起来像大软件，"系统"听起来像 ERP。<strong>Skill = 一项技能</strong>——你给 AI 装上一个技能，它就会干一件事。简单、具体、可叠加。
+                </span>
+            </div>
+        </section>
+
+        <!-- ═══ 二、产品线总览 ═══ -->
+        <section class="sec" id="sec-overview">
+            <div class="sec-header">
+                <span class="num">二</span>
+                <h2>产品线总览</h2>
+                <p>按「品牌推广」「交付」「获客」三大场景组织，共 8 个 Skill</p>
+            </div>
+            <div class="overview-wrap">
+                <div class="overview-core">
+                    <div class="core-node">
+                        律师个人数据库
+                        <small>历史沟通 / 历史合同 / 客户档案</small>
+                    </div>
+                    <span class="arrow-down"></span>
+                </div>
+                <div class="overview-scenes">
+                    <div class="scene-group sg-brand">
+                        <h4>🔥 品牌推广</h4>
+                        <div class="scene-skills">
+                            <div class="scene-skill sk-s7 featured"><span class="skill-id">S7</span>每日普法卡片</div>
+                        </div>
+                    </div>
+                    <div class="scene-group sg-deliver">
+                        <h4>⚙️ 交付场景</h4>
+                        <div class="scene-skills">
+                            <div class="scene-skill sk-s1"><span class="skill-id">S1</span>智能回复起草器</div>
+                            <div class="scene-skill sk-s3"><span class="skill-id">S3</span>合同起草器</div>
+                            <div class="scene-skill sk-s4"><span class="skill-id">S4</span>合同审核器</div>
+                            <div class="scene-skill sk-s6"><span class="skill-id">S6</span>法规快查</div>
+                        </div>
+                    </div>
+                    <div class="scene-group sg-acquire">
+                        <h4>📣 获客场景</h4>
+                        <div class="scene-skills">
+                            <div class="scene-skill sk-s5a"><span class="skill-id">S5A</span>客户分析</div>
+                            <div class="scene-skill sk-s5b"><span class="skill-id">S5B</span>服务方案生成</div>
+                            <div class="scene-skill sk-s2"><span class="skill-id">S2</span>需求收集提示</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ 三、每个 Skill 定义 ═══ -->
+        <section class="sec" id="sec-skills">
+            <div class="sec-header">
+                <span class="num">三</span>
+                <h2>每个 Skill 的产品定义</h2>
+            </div>
+
+            <div class="skills-grid">
+
+                <!-- S7 · 每日普法卡片 — 首推 -->
+                <div class="skill-card card-featured c-s7">
+                    <span class="card-icon">🖼️</span>
+                    <div class="card-top">
+                        <span class="card-tag">S7 · 品牌推广</span>
+                        <h3 class="card-title">每日普法卡片生成器</h3>
+                        <div class="card-desc">输入赛道和风格，AI 每天自动生成带个人形象的普法海报，直接发朋友圈</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>输入：</strong>律师赛道 + 个人风格 + 真人照片</li>
+                            <li><strong>输出：</strong>每日 3 张定制化法律海报（法条 + 金句 + 个人形象）</li>
+                            <li><strong>核心差异：</strong>不是换个 Logo 的通用模板——带你的风格、你的金句、你的脸</li>
+                        </ul>
+                        <div class="card-diff">💡 "稍微高级一点点，就打败很多同行"</div>
+                        <span class="sc-hot" style="background:var(--cbg);color:var(--c);">🔥 刘律师原话："你卖365天发卡片，真的会卖爆掉的，全国律师都可以买。"</span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status st-done">✅ 已验证 · 可现场演示</span>
+                        <span class="card-meta">适用：所有想通过朋友圈获客的律师</span>
+                    </div>
+                </div>
+
+                <!-- S1 · 智能回复起草器 -->
+                <div class="skill-card c-s1">
+                    <span class="card-icon">💬</span>
+                    <div class="card-top">
+                        <span class="card-tag">S1 · 交付</span>
+                        <h3 class="card-title">智能回复起草器</h3>
+                        <div class="card-desc">收到客户消息，AI 秒出专业回复草稿</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>输入：</strong>客户消息 + 标签 + 问题类型</li>
+                            <li><strong>输出：</strong>深度/快捷双模式回复草稿</li>
+                            <li><strong>核心差异：</strong>知道「这个客户」要简短还是详细，自动适配回复深度</li>
+                        </ul>
+                        <div class="card-diff">💡 vs 通用 AI：豆包不知道客户是谁，写出来一看就是 AI</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status st-demo">可 Demo · 3-5天</span>
+                        <span class="card-meta">每天微信回复 > 20 条</span>
+                    </div>
+                </div>
+
+                <!-- S5A · 潜在客户分析 -->
+                <div class="skill-card c-s5a">
+                    <span class="card-icon">🔍</span>
+                    <div class="card-top">
+                        <span class="card-tag">S5A · 获客 · ★ 第一优先</span>
+                        <h3 class="card-title">潜在客户分析</h3>
+                        <div class="card-desc">沟通前 AI 自动调取客户历史、偏好、关注点</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>输入：</strong>沟通记录 + 客户背景信息</li>
+                            <li><strong>输出：</strong>客户偏好分析报告 + 定制话术建议</li>
+                            <li><strong>核心差异：</strong>越用越懂每个客户，自动积累沟通历史，解放记忆负担</li>
+                        </ul>
+                        <div class="card-diff">💡 知己知彼，每次跟客户聊天前先看一眼 AI 整理的画像</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status st-demo">可 Demo · 3-5天</span>
+                        <span class="card-meta">同时维护 > 10 个活跃客户</span>
+                    </div>
+                </div>
+
+                <!-- S3 · 合同起草器 -->
+                <div class="skill-card c-s3">
+                    <span class="card-icon">📝</span>
+                    <div class="card-top">
+                        <span class="card-tag">S3 · 交付</span>
+                        <h3 class="card-title">合同起草器</h3>
+                        <div class="card-desc">告诉 AI 合同类型、代理立场、关注点，直接出完整初稿</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>输入：</strong>客户意图 + 代理立场 + 关注点</li>
+                            <li><strong>输出：</strong>完整合同初稿 + 重点条款说明</li>
+                            <li><strong>核心差异：</strong>基于意图起草，先翻译客户真实目的再生成合同</li>
+                        </ul>
+                        <div class="card-diff">💡 理解"客户说的 ≠ 客户要的"，不是基于模板的填空</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status st-plan">规划中 · 5-7天</span>
+                        <span class="card-meta">每月起草 > 5 份合同</span>
+                    </div>
+                </div>
+
+                <!-- S4 · 合同审核器 -->
+                <div class="skill-card c-s4">
+                    <span class="card-icon">📋</span>
+                    <div class="card-top">
+                        <span class="card-tag">S4 · 交付</span>
+                        <h3 class="card-title">合同审核器（带修订痕迹）</h3>
+                        <div class="card-desc">丢进合同，AI 输出带修订痕迹的 Word，可直接交付客户</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>输入：</strong>原始合同 + 代理立场 + 历史审核标准</li>
+                            <li><strong>输出：</strong>带修订痕迹的 Word + 修改理由说明</li>
+                            <li><strong>核心差异：</strong>直接输出成品，接入个人库后从 60 分 → 80 分</li>
+                        </ul>
+                        <div class="card-diff">💡 不是"修改建议清单"，是可直接交付的终稿</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status st-plan">规划中 · 5-7天</span>
+                        <span class="card-meta">合同审核量 > 3份/周</span>
+                    </div>
+                </div>
+
+                <!-- S5B · 服务方案生成 -->
+                <div class="skill-card c-s5b">
+                    <span class="card-icon">📊</span>
+                    <div class="card-top">
+                        <span class="card-tag">S5B · 获客 · ★ 第一优先</span>
+                        <h3 class="card-title">定制化服务方案生成</h3>
+                        <div class="card-desc">根据谈案记录，自动生成针对客户的定制报价方案</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>输入：</strong>谈案记录 + 客户关注点（成本/胜率/时间）</li>
+                            <li><strong>输出：</strong>定制化报价方案 + 材料清单</li>
+                            <li><strong>核心差异：</strong>基于"这个客户最在乎什么"生成，不是泛泛模板</li>
+                        </ul>
+                        <div class="card-diff">💡 每份方案都像是为这个客户量身定做的</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status st-plan">规划中 · 3-5天</span>
+                        <span class="card-meta">每月出 > 5 份报价方案</span>
+                    </div>
+                </div>
+
+                <!-- S6 · 法规快查 -->
+                <div class="skill-card c-s6">
+                    <span class="card-icon">⚖️</span>
+                    <div class="card-top">
+                        <span class="card-tag">S6 · 交付</span>
+                        <h3 class="card-title">法规快查 + 意见匹配</h3>
+                        <div class="card-desc">一个问题进去，法条 + 判例 + 适用性判断一起出来</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>输入：</strong>法律问题 + 当前客户背景情况</li>
+                            <li><strong>输出：</strong>法条 + 判例 + 适用性分析 + 严谨表述草稿</li>
+                            <li><strong>核心差异：</strong>不只检索，还判断"这个法条适不适用于你的案子"</li>
+                        </ul>
+                        <div class="card-diff">💡 vs 通用 AI：不会"编法条"（幻觉问题），基于可靠数据源</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status st-plan">规划中 · 5-7天</span>
+                        <span class="card-meta">频繁引用法条的诉讼律师</span>
+                    </div>
+                </div>
+
+                <!-- S2 · 需求收集提示器 -->
+                <div class="skill-card c-s2">
+                    <span class="card-icon">💡</span>
+                    <div class="card-top">
+                        <span class="card-tag">S2 · 获客</span>
+                        <h3 class="card-title">需求收集提示器</h3>
+                        <div class="card-desc">客户说"来个租赁合同"，AI 提示你还需要追问哪些信息</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>输入：</strong>客户初始请求</li>
+                            <li><strong>输出：</strong>结构化追问清单提示</li>
+                            <li><strong>核心差异：</strong>AI 站在律师身后做结构化提醒，不替代律师判断</li>
+                        </ul>
+                        <div class="card-diff">💡 定位为辅助参谋——意图判断是律师的立身本领</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-status st-plan">规划中 · 2-3天</span>
+                        <span class="card-meta">初/中级律师 · 接触新行业的资深律师</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══ 四、两条合作路径 ═══ -->
+        <section class="sec" id="sec-paths">
+            <div class="sec-header">
+                <span class="num">四</span>
+                <h2>两条合作路径</h2>
+                <p>同一个目标：让你用 AI 稳定创造业务价值。两种方式，看你更适合哪一种。</p>
+            </div>
+            <div class="pkg-grid">
+                <div class="pkg-card">
+                    <h4>路径 A · 结果线</h4>
+                    <div class="pkg-sub">不想学 AI，只想要稳定结果</div>
+                    <ul>
+                        <li>直接交付可用的 AI Skill 产品</li>
+                        <li>买来即用，零学习成本</li>
+                        <li>按需选择 Skill 组合</li>
+                        <li>持续使用，按月/按结果订阅</li>
+                        <li>适合：时间稀缺、只要结果的律师</li>
+                    </ul>
+                </div>
+                <div class="pkg-card pkg-highlight">
+                    <h4>路径 B · 工作坊线</h4>
+                    <div class="pkg-sub">想把 AI 能力变成团队长期资产</div>
+                    <ul>
+                        <li>深度萃取律师团队经验</li>
+                        <li>现场共创，交付生产级 Skill</li>
+                        <li>团队成员学会方法，可自行复制</li>
+                        <li>接入律师个人数据库</li>
+                        <li>适合：有团队、愿投入学习的律所</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="background:#f1f5f9;border-radius:var(--r);padding:16px 20px;font-size:13px;color:var(--text2);margin-bottom:24px;">
+                <strong style="color:var(--text1);">不确定选哪条？</strong>
+                先从结果线试跑 → 看到价值 → 再升级到工作坊深度内化。<br>
+                "一开始买的是产品，对产品认可之后，才有兴趣继续研究方法。" ——律师原话
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+                <div style="background:#f3e8ff;border-radius:var(--r);padding:18px;font-size:13px;">
+                    <strong style="color:#7c3aed;display:block;margin-bottom:6px;">🎬 娱乐法赛道</strong>
+                    <span style="color:var(--text2);">针对演艺合同、IP授权、艺人经纪等场景定制专属 Skill</span>
+                </div>
+                <div style="background:#dbeafe;border-radius:var(--r);padding:18px;font-size:13px;">
+                    <strong style="color:#2563eb;display:block;margin-bottom:6px;">🌍 跨境并购</strong>
+                    <span style="color:var(--text2);">多法域合规检查 + 双语文书生成能力</span>
+                </div>
+                <div style="background:#fef3c7;border-radius:var(--r);padding:18px;font-size:13px;">
+                    <strong style="color:#92400e;display:block;margin-bottom:6px;">🏢 律所内部管理</strong>
+                    <span style="color:var(--text2);">来访登记、冲突检索、利益冲突筛查等行政 Skill</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ 五、目标客户画像 ═══ -->
+        <section class="sec" id="sec-persona">
+            <div class="sec-header">
+                <span class="num">五</span>
+                <h2>目标客户画像</h2>
+            </div>
+            <div class="persona-grid">
+                <div class="persona-card" style="border-top: 3px solid #059669;">
+                    <h4 style="color:#059669;">✅ 理想客户</h4>
+                    <ul class="persona-yes">
+                        <li>个人律师或小团队合伙人（5-50人）</li>
+                        <li>有一定业务量，时间是最大瓶颈</li>
+                        <li>已经在用 AI（DeepSeek/元宝/阿尔法）</li>
+                        <li>每天 75%+ 时间花在文字沟通上</li>
+                        <li>愿意先试再买（"60分以上才付费"）</li>
+                        <li>有朋友圈获客需求</li>
+                    </ul>
+                </div>
+                <div class="persona-card" style="border-top: 3px solid #dc2626;">
+                    <h4 style="color:#dc2626;">❌ 非目标客户</h4>
+                    <ul class="persona-no">
+                        <li>只想听课 / 只想了解的</li>
+                        <li>认为"AI 不可能帮到我"的</li>
+                        <li>大型律所 200人+ 有自建 IT 团队的</li>
+                        <li>纯关系型律师，不需要内容获客的</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CTA 跳转：查看客户分析报告 -->
+            <div class="cta-box">
+                <div class="cta-text">
+                    <h3>📊 想了解我们的客户洞察？</h3>
+                    <p>基于 7 段现场录音（共 4 小时 50 分钟）的深度客户分析报告</p>
+                </div>
+                <a href="客户分析报告总览.html" class="cta-btn">查看客户分析报告 →</a>
+            </div>
+        </section>
+
+        <!-- ═══ 六、现场调研 ═══ -->
+        <section class="sec" id="sec-survey">
+            <div class="sec-header">
+                <span class="num">六</span>
+                <h2>现场调研</h2>
+                <p>帮助我们了解您的需求和偏好，以便提供更精准的服务</p>
+            </div>
+            <div class="survey-section">
+                <div class="survey-q">
+                    <span class="q-num">1</span>
+                    <span class="q-text">你更想"学会并掌握"AI，还是"直接拿到结果"？</span>
+                    <div class="q-options">
+                        <span class="q-opt">学会并掌握</span>
+                        <span class="q-opt">直接拿结果</span>
+                        <span class="q-opt">先拿结果，后续再学</span>
+                    </div>
+                </div>
+                <div class="survey-q">
+                    <span class="q-num">2</span>
+                    <span class="q-text">你每周能投入多少时间在 AI 工具上？</span>
+                    <div class="q-options">
+                        <span class="q-opt">&lt; 1 小时</span>
+                        <span class="q-opt">1-4 小时</span>
+                        <span class="q-opt">&gt; 4 小时</span>
+                    </div>
+                </div>
+                <div class="survey-q">
+                    <span class="q-num">3</span>
+                    <span class="q-text">这件事是你个人用，还是需要团队复制？</span>
+                    <div class="q-options">
+                        <span class="q-opt">个人使用</span>
+                        <span class="q-opt">团队复制（2-5人）</span>
+                        <span class="q-opt">全所推广（10人+）</span>
+                    </div>
+                </div>
+                <div class="survey-q">
+                    <span class="q-num">4</span>
+                    <span class="q-text">你希望多快见效？</span>
+                    <div class="q-options">
+                        <span class="q-opt">1周内</span>
+                        <span class="q-opt">1个月内</span>
+                        <span class="q-opt">3个月形成能力</span>
+                    </div>
+                </div>
+                <div class="survey-q">
+                    <span class="q-num">5</span>
+                    <span class="q-text">你更接受哪种付费方式？</span>
+                    <div class="q-options">
+                        <span class="q-opt">一次性买断</span>
+                        <span class="q-opt">按月订阅</span>
+                        <span class="q-opt">按结果付费</span>
+                    </div>
+                </div>
+                <div class="survey-q">
+                    <span class="q-num">6</span>
+                    <span class="q-text">一个能减少你 50% 重复工作的 AI 助手，月费多少你愿意尝试？</span>
+                    <div class="q-open">请填写金额：______ 元/月</div>
+                </div>
+                <div class="survey-q">
+                    <span class="q-num">7</span>
+                    <span class="q-text">以上 8 个 Skill 你最感兴趣哪几个？（多选）</span>
+                    <div class="q-options">
+                        <span class="q-opt">S7 每日普法卡片</span>
+                        <span class="q-opt">S1 智能回复起草器</span>
+                        <span class="q-opt">S3 合同起草器</span>
+                        <span class="q-opt">S4 合同审核器</span>
+                        <span class="q-opt">S5A 客户分析</span>
+                        <span class="q-opt">S5B 服务方案生成</span>
+                        <span class="q-opt">S6 法规快查</span>
+                        <span class="q-opt">S2 需求收集提示器</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ SALES QUOTE ═══ -->
+        <div class="sales-quote">
+            <div class="sq-label">一句话卖点</div>
+            <blockquote>
+                "你用阿尔法查法条、用豆包起草文书——但它们都不认识你。<br>
+                我们的 AI Skill <strong>知道你是谁、知道你的客户、知道你的风格</strong>。<br>
+                你把材料丢进去，它直接出<strong>能交付的成品</strong>，不是建议清单。"
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="footer">
+        V2 · 基于 0303 现场 7 段录音 + 律师客户分析报告 V2 + 业务线策略综合定义 · 周五活动用
+    </div>
+
+    <script>
+        const navBar = document.getElementById('navBar');
+        const navLinks = document.querySelectorAll('.nav-link:not(.nav-ext)');
+        const sections = document.querySelectorAll('.sec[id]');
+        window.addEventListener('scroll', () => {
+            navBar.classList.toggle('scrolled', window.scrollY > 20);
+            let current = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+            });
+        });
+    </script>
+</body>
+
+</html>
