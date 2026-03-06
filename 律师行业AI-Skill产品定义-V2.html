@@ -291,13 +291,88 @@
         }
         .cta-btn:hover { background: #f0f9ff; box-shadow: 0 4px 16px rgba(0,0,0,.2); transform: translateY(-2px); }
 
-        .survey-section { margin-top: 32px; }
-        .survey-q { background: var(--card); border-radius: var(--r); box-shadow: var(--sh); padding: 20px 24px; margin-bottom: 12px; }
-        .survey-q .q-num { display: inline-flex; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin-right: 10px; flex-shrink: 0; }
-        .survey-q .q-text { font-size: 14px; font-weight: 600; }
-        .survey-q .q-options { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-        .survey-q .q-opt { font-size: 12px; padding: 6px 14px; border-radius: 20px; background: #f1f5f9; color: var(--text2); border: 1px solid var(--border); }
-        .survey-q .q-open { margin-top: 10px; font-size: 12px; color: var(--text3); font-style: italic; }
+        .survey-section {
+            margin-top: 32px;
+            background: linear-gradient(135deg, #eef4ff, #ffffff 42%, #f5f3ff);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--sh-lg);
+            padding: 32px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) 228px;
+            gap: 32px;
+            align-items: center;
+        }
+        .survey-copy { display: flex; flex-direction: column; gap: 16px; }
+        .survey-kicker {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .survey-copy h3 {
+            font-size: clamp(24px, 3vw, 30px);
+            line-height: 1.35;
+            font-weight: 800;
+        }
+        .survey-copy p {
+            font-size: 15px;
+            color: var(--text2);
+            max-width: 560px;
+        }
+        .survey-points {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .survey-points span {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.85);
+            border: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text2);
+        }
+        .survey-tip {
+            font-size: 13px;
+            color: var(--text3);
+        }
+        .survey-qr {
+            background: #fff;
+            border-radius: 20px;
+            padding: 18px;
+            border: 1px solid rgba(79,70,229,.12);
+            box-shadow: 0 14px 32px rgba(79,70,229,.12);
+            text-align: center;
+        }
+        .survey-qr img {
+            display: block;
+            width: 100%;
+            max-width: 192px;
+            margin: 0 auto;
+            border-radius: 12px;
+        }
+        .survey-qr strong {
+            display: block;
+            margin-top: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text1);
+        }
+        .survey-qr span {
+            display: block;
+            margin-top: 4px;
+            font-size: 12px;
+            color: var(--text3);
+        }
 
         .footer { text-align: center; padding: 32px 20px; font-size: 12px; color: var(--text3); border-top: 1px solid var(--border); margin-top: 24px; }
 
@@ -311,6 +386,11 @@
             .form-table th { width: 100px; }
             .nav-brand { display: none; }
             .cta-box { flex-direction: column; text-align: center; }
+            .survey-section { grid-template-columns: 1fr; padding: 24px; text-align: center; }
+            .survey-kicker { margin: 0 auto; }
+            .survey-copy p { max-width: none; }
+            .survey-points { justify-content: center; }
+            .survey-qr { width: min(100%, 240px); margin: 0 auto; }
         }
     </style>
 </head>
@@ -332,7 +412,7 @@
     </nav>
 
     <header class="hero">
-        <div class="kicker">产品定义文档 V2 · 周五活动用</div>
+        <div class="kicker">产品定义文档 V2 · 20260303</div>
         <h1>律师行业 <em>AI Skill</em> 产品定义</h1>
         <p class="sub">比豆包更懂你——接入你的数据库、学习你的风格<br>买来即用 · 越用越懂你 · 数据归你所有</p>
         <div class="principle">
@@ -361,7 +441,7 @@
                 </div>
             </div>
             <table class="form-table">
-                <tr><th>交付物</th><td>一个可运行的 AI Skill（部署在微信 / 网页工作台中）</td></tr>
+                <tr><th>交付物</th><td>一个可运行的 AI Skill（部署在飞书 / 微信 / 网页工作台中）</td></tr>
                 <tr><th>使用方式</th><td>律师把材料丢进去 → AI 输出结果 → 律师确认/微调 → 完成</td></tr>
                 <tr><th>数据归属</th><td>100% 属于律师，不上传第三方，代码交付后归客户所有</td></tr>
                 <tr><th>迭代方式</th><td>越用越懂你——AI 会积累你的使用偏好和反馈</td></tr>
@@ -442,7 +522,6 @@
                             <li><strong>核心差异：</strong>不是换个 Logo 的通用模板——带你的风格、你的金句、你的脸</li>
                         </ul>
                         <div class="card-diff">💡 "稍微高级一点点，就打败很多同行"</div>
-                        <span class="sc-hot" style="background:var(--cbg);color:var(--c);">🔥 刘律师原话："你卖365天发卡片，真的会卖爆掉的，全国律师都可以买。"</span>
                     </div>
                     <div class="card-footer">
                         <span class="card-status st-done">✅ 已验证 · 可现场演示</span>
@@ -673,7 +752,6 @@
                         <li>有一定业务量，时间是最大瓶颈</li>
                         <li>已经在用 AI（DeepSeek/元宝/阿尔法）</li>
                         <li>每天 75%+ 时间花在文字沟通上</li>
-                        <li>愿意先试再买（"60分以上才付费"）</li>
                         <li>有朋友圈获客需求</li>
                     </ul>
                 </div>
@@ -683,7 +761,6 @@
                         <li>只想听课 / 只想了解的</li>
                         <li>认为"AI 不可能帮到我"的</li>
                         <li>大型律所 200人+ 有自建 IT 团队的</li>
-                        <li>纯关系型律师，不需要内容获客的</li>
                     </ul>
                 </div>
             </div>
@@ -703,72 +780,22 @@
             <div class="sec-header">
                 <span class="num">六</span>
                 <h2>现场调研</h2>
-                <p>帮助我们了解您的需求和偏好，以便提供更精准的服务</p>
+                <p>欢迎现场扫码填写，帮助我们更快判断大家对 AI员工（Skill）的兴趣方向、落地节奏和合作方式。</p>
             </div>
             <div class="survey-section">
-                <div class="survey-q">
-                    <span class="q-num">1</span>
-                    <span class="q-text">你更想"学会并掌握"AI，还是"直接拿到结果"？</span>
-                    <div class="q-options">
-                        <span class="q-opt">学会并掌握</span>
-                        <span class="q-opt">直接拿结果</span>
-                        <span class="q-opt">先拿结果，后续再学</span>
+                <div class="survey-copy">
+                    <span class="survey-kicker">现场互动</span>
+                    <h3>律师行业 AI员工（Skill）落地需求 · 1 分钟小调查</h3>
+                    <div class="survey-points">
+                        <span>看看你最想先落地哪类 AI员工（Skill）</span>
+                        <span>看看你希望多快看到效果</span>
+                        <span>看看更适合个人试跑还是团队共创</span>
                     </div>
                 </div>
-                <div class="survey-q">
-                    <span class="q-num">2</span>
-                    <span class="q-text">你每周能投入多少时间在 AI 工具上？</span>
-                    <div class="q-options">
-                        <span class="q-opt">&lt; 1 小时</span>
-                        <span class="q-opt">1-4 小时</span>
-                        <span class="q-opt">&gt; 4 小时</span>
-                    </div>
-                </div>
-                <div class="survey-q">
-                    <span class="q-num">3</span>
-                    <span class="q-text">这件事是你个人用，还是需要团队复制？</span>
-                    <div class="q-options">
-                        <span class="q-opt">个人使用</span>
-                        <span class="q-opt">团队复制（2-5人）</span>
-                        <span class="q-opt">全所推广（10人+）</span>
-                    </div>
-                </div>
-                <div class="survey-q">
-                    <span class="q-num">4</span>
-                    <span class="q-text">你希望多快见效？</span>
-                    <div class="q-options">
-                        <span class="q-opt">1周内</span>
-                        <span class="q-opt">1个月内</span>
-                        <span class="q-opt">3个月形成能力</span>
-                    </div>
-                </div>
-                <div class="survey-q">
-                    <span class="q-num">5</span>
-                    <span class="q-text">你更接受哪种付费方式？</span>
-                    <div class="q-options">
-                        <span class="q-opt">一次性买断</span>
-                        <span class="q-opt">按月订阅</span>
-                        <span class="q-opt">按结果付费</span>
-                    </div>
-                </div>
-                <div class="survey-q">
-                    <span class="q-num">6</span>
-                    <span class="q-text">一个能减少你 50% 重复工作的 AI 助手，月费多少你愿意尝试？</span>
-                    <div class="q-open">请填写金额：______ 元/月</div>
-                </div>
-                <div class="survey-q">
-                    <span class="q-num">7</span>
-                    <span class="q-text">以上 8 个 Skill 你最感兴趣哪几个？（多选）</span>
-                    <div class="q-options">
-                        <span class="q-opt">S7 每日普法卡片</span>
-                        <span class="q-opt">S1 智能回复起草器</span>
-                        <span class="q-opt">S3 合同起草器</span>
-                        <span class="q-opt">S4 合同审核器</span>
-                        <span class="q-opt">S5A 客户分析</span>
-                        <span class="q-opt">S5B 服务方案生成</span>
-                        <span class="q-opt">S6 法规快查</span>
-                        <span class="q-opt">S2 需求收集提示器</span>
-                    </div>
+                <div class="survey-qr">
+                    <img src="问卷二维码.png" alt="AI员工（Skill）调研问卷二维码">
+                    <strong>扫码即可填写</strong>
+                    <span>手机识别二维码，提交 1 分钟小调查</span>
                 </div>
             </div>
         </section>
@@ -785,7 +812,7 @@
     </div>
 
     <div class="footer">
-        V2 · 基于 0303 现场 7 段录音 + 律师客户分析报告 V2 + 业务线策略综合定义 · 周五活动用
+        V2 · 基于 0303 现场 7 段录音 + 律师客户分析报告 V2 + 业务线策略综合定义
     </div>
 
     <script>

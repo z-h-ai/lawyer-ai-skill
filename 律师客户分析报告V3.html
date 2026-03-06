@@ -94,6 +94,101 @@
 
     .diagram-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 20px; margin: 20px 0; overflow-x: auto; }
     .diagram-wrap .mermaid { display: flex; justify-content: center; }
+    .priority-matrix { min-width: 680px; }
+    .pm-chart {
+      position: relative;
+      height: 460px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background:
+        linear-gradient(to right, transparent 49.8%, rgba(148,163,184,0.6) 49.8%, rgba(148,163,184,0.6) 50.2%, transparent 50.2%),
+        linear-gradient(to top, transparent 49.8%, rgba(148,163,184,0.6) 49.8%, rgba(148,163,184,0.6) 50.2%, transparent 50.2%),
+        linear-gradient(135deg, #f8fafc, #ffffff 55%, #eef4ff);
+      overflow: hidden;
+    }
+    .pm-quadrant-label {
+      position: absolute;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 6px 18px rgba(15,23,42,0.08);
+    }
+    .pm-q1 { top: 16px; right: 16px; background: rgba(219,234,254,0.92); color: #1d4ed8; }
+    .pm-q2 { top: 16px; left: 16px; background: rgba(237,233,254,0.92); color: #6d28d9; }
+    .pm-q3 { bottom: 16px; left: 16px; background: rgba(241,245,249,0.96); color: #475569; }
+    .pm-q4 { bottom: 16px; right: 16px; background: rgba(220,252,231,0.96); color: #15803d; }
+    .pm-axis-label {
+      position: absolute;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text2);
+      letter-spacing: 0.02em;
+    }
+    .pm-axis-top { top: 12px; left: 50%; transform: translateX(-50%); }
+    .pm-axis-bottom { bottom: 12px; left: 50%; transform: translateX(-50%); }
+    .pm-axis-left { left: 12px; top: 50%; transform: translateY(-50%) rotate(-90deg); transform-origin: left top; }
+    .pm-axis-right { right: 12px; top: 50%; transform: translateY(-50%) rotate(90deg); transform-origin: right top; }
+    .pm-point {
+      position: absolute;
+      left: calc(var(--x) * 1%);
+      bottom: calc(var(--y) * 1%);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--c);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      border: 2px solid #fff;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.18);
+      transform: translate(-50%, 50%);
+    }
+    .pm-legend {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .pm-legend-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .pm-legend-badge {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--c);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .pm-legend-item strong {
+      display: block;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .pm-legend-item span {
+      display: block;
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.5;
+    }
 
     .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: var(--radius); border: 1px solid var(--border); }
     table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--surface); }
@@ -122,11 +217,6 @@
     .card-li .card-header h3 { color: #1e40af; }
     .card-li .tag { background: var(--tag-blue); color: #1e40af; }
     .card-li .label { color: #2563eb; }
-    .card-feng .card-header { background: #f0fdf4; }
-    .card-feng .card-header h3 { color: #166534; }
-    .card-feng .tag { background: var(--tag-green); color: #166534; }
-    .card-feng .label { color: #16a34a; }
-
     .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
     .skill-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
     .skill-card .sk-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
@@ -160,6 +250,7 @@
       .persona-grid { grid-template-columns: 1fr; }
       .skill-card .sk-row { grid-template-columns: 1fr; }
       .insight-grid { grid-template-columns: 1fr; }
+      .pm-legend { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -292,7 +383,7 @@
         <h2>客户画像</h2>
       </div>
 
-      <div class="callout">三位律师，三种 AI 使用姿态，但有同一个核心诉求：<strong>把时间还给我</strong></div>
+      <div class="callout">两位律师，两种 AI 使用姿态，但有同一个核心诉求：<strong>把时间还给我</strong></div>
 
       <div class="persona-grid">
         <!-- 刘律师 -->
@@ -342,29 +433,10 @@
           </div>
         </div>
 
-        <!-- 冯律师 -->
-        <div class="persona-card card-feng">
-          <div class="card-header">
-            <h3>冯律师</h3>
-            <span class="tag">合同专向 · 洞察者 · 数据库信仰者</span>
-          </div>
-          <div class="card-body">
-            <div class="card-item"><div class="label">身份</div>资深律师，有AI产品评测经验</div>
-            <div class="card-item"><div class="label">核心习惯</div>每次客户提需求都"多问一句——你拿来干嘛的？"</div>
-            <div class="card-item"><div class="label">工作流</div>阿尔法出修订痕迹→自己做40%深化→节省前60%</div>
-            <div class="card-item"><div class="label">核心诉求</div>接入个人数据库 = 从60分升到80分</div>
-            <div class="card-item">
-              <div class="quote-small">"阿尔法读取的是市面上的律师改合同水平，说白了就60分。"</div>
-            </div>
-            <div class="card-item">
-              <div class="quote-small">"如果我能把数据库直接丢给他，说按之前的标准去审核——这问题好解决。"</div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- 共同心理画像 -->
-      <h3 style="font-size:16px;font-weight:700;margin:28px 0 16px;">三人共同心理画像<span style="font-size:12px;background:var(--tag-pink);color:#be185d;padding:2px 8px;border-radius:12px;margin-left:8px;font-weight:600;">V3 新增</span></h3>
+      <h3 style="font-size:16px;font-weight:700;margin:28px 0 16px;">两位律师共同心理画像<span style="font-size:12px;background:var(--tag-pink);color:#be185d;padding:2px 8px;border-radius:12px;margin-left:8px;font-weight:600;">V3 新增</span></h3>
 
       <div class="insight-grid">
         <div class="insight-card" style="border-left:3px solid var(--accent);">
@@ -396,23 +468,86 @@
       <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;">需求优先级矩阵</h3>
 
       <div class="diagram-wrap">
-        <div class="mermaid">
-          quadrantChart
-            title 需求优先级（频率 × 痛苦度）
-            x-axis 低频 --> 高频
-            y-axis 低痛苦 --> 高痛苦
-            quadrant-1 立即做
-            quadrant-2 重要但不急
-            quadrant-3 低优先
-            quadrant-4 高频低痛
-            微信回复草稿: [0.85, 0.80]
-            朋友圈普法内容: [0.90, 0.50]
-            合同起草: [0.70, 0.65]
-            合同审核修订痕迹: [0.55, 0.85]
-            法规快查: [0.75, 0.60]
-            客户意图识别: [0.80, 0.70]
-            谈案报价方案: [0.65, 0.75]
-            客户画像积累: [0.45, 0.55]
+        <div class="priority-matrix">
+          <div class="pm-chart">
+            <div class="pm-axis-label pm-axis-top">高痛苦</div>
+            <div class="pm-axis-label pm-axis-bottom">低痛苦</div>
+            <div class="pm-axis-label pm-axis-left">低频</div>
+            <div class="pm-axis-label pm-axis-right">高频</div>
+
+            <div class="pm-quadrant-label pm-q1">立即做</div>
+            <div class="pm-quadrant-label pm-q2">重要但不急</div>
+            <div class="pm-quadrant-label pm-q3">低优先</div>
+            <div class="pm-quadrant-label pm-q4">高频低痛</div>
+
+            <div class="pm-point" style="--x:85; --y:80; --c:#2563eb;">1</div>
+            <div class="pm-point" style="--x:90; --y:50; --c:#db2777;">2</div>
+            <div class="pm-point" style="--x:70; --y:65; --c:#059669;">3</div>
+            <div class="pm-point" style="--x:55; --y:85; --c:#d97706;">4</div>
+            <div class="pm-point" style="--x:75; --y:60; --c:#0891b2;">5</div>
+            <div class="pm-point" style="--x:80; --y:70; --c:#7c3aed;">6</div>
+            <div class="pm-point" style="--x:65; --y:75; --c:#0f766e;">7</div>
+            <div class="pm-point" style="--x:45; --y:55; --c:#475569;">8</div>
+          </div>
+
+          <div class="pm-legend">
+            <div class="pm-legend-item">
+              <div class="pm-legend-badge" style="--c:#2563eb;">1</div>
+              <div>
+                <strong>微信回复草稿</strong>
+                <span>频率 0.85 · 痛苦度 0.80</span>
+              </div>
+            </div>
+            <div class="pm-legend-item">
+              <div class="pm-legend-badge" style="--c:#db2777;">2</div>
+              <div>
+                <strong>朋友圈普法内容</strong>
+                <span>频率 0.90 · 痛苦度 0.50</span>
+              </div>
+            </div>
+            <div class="pm-legend-item">
+              <div class="pm-legend-badge" style="--c:#059669;">3</div>
+              <div>
+                <strong>合同起草</strong>
+                <span>频率 0.70 · 痛苦度 0.65</span>
+              </div>
+            </div>
+            <div class="pm-legend-item">
+              <div class="pm-legend-badge" style="--c:#d97706;">4</div>
+              <div>
+                <strong>合同审核修订痕迹</strong>
+                <span>频率 0.55 · 痛苦度 0.85</span>
+              </div>
+            </div>
+            <div class="pm-legend-item">
+              <div class="pm-legend-badge" style="--c:#0891b2;">5</div>
+              <div>
+                <strong>法规快查</strong>
+                <span>频率 0.75 · 痛苦度 0.60</span>
+              </div>
+            </div>
+            <div class="pm-legend-item">
+              <div class="pm-legend-badge" style="--c:#7c3aed;">6</div>
+              <div>
+                <strong>客户意图识别</strong>
+                <span>频率 0.80 · 痛苦度 0.70</span>
+              </div>
+            </div>
+            <div class="pm-legend-item">
+              <div class="pm-legend-badge" style="--c:#0f766e;">7</div>
+              <div>
+                <strong>谈案报价方案</strong>
+                <span>频率 0.65 · 痛苦度 0.75</span>
+              </div>
+            </div>
+            <div class="pm-legend-item">
+              <div class="pm-legend-badge" style="--c:#475569;">8</div>
+              <div>
+                <strong>客户画像积累</strong>
+                <span>频率 0.45 · 痛苦度 0.55</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
