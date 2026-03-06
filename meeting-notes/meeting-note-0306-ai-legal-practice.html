@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>03-06 内部会议纪要：AI 在法律实务中的应用</title>
+    <style>
+      :root {
+        --bg: #f6f3ea;
+        --panel: rgba(255, 252, 245, 0.88);
+        --panel-strong: #fffdf8;
+        --ink: #172119;
+        --muted: #5b655b;
+        --line: rgba(23, 33, 25, 0.12);
+        --accent: #556b2f;
+        --accent-soft: #dbe7c5;
+        --accent-warm: #d78d46;
+        --shadow: 0 24px 60px rgba(50, 42, 25, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "IBM Plex Sans SC", "PingFang SC", "Hiragino Sans GB",
+          "Source Han Sans SC", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(219, 231, 197, 0.8), transparent 35%),
+          radial-gradient(circle at top right, rgba(215, 141, 70, 0.14), transparent 24%),
+          linear-gradient(180deg, #f7f3e9 0%, #f2efe6 100%);
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 40px 20px 88px;
+      }
+
+      .hero {
+        padding: 36px 32px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(255, 253, 248, 0.96), rgba(250, 246, 236, 0.9));
+        box-shadow: var(--shadow);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.15;
+      }
+
+      h1 {
+        margin-top: 18px;
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        letter-spacing: -0.03em;
+      }
+
+      .lead {
+        max-width: 860px;
+        margin: 18px 0 0;
+        font-size: 1.05rem;
+        line-height: 1.75;
+        color: var(--muted);
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .meta-card {
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(23, 33, 25, 0.08);
+      }
+
+      .meta-card strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.92rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 22px;
+        margin-top: 24px;
+      }
+
+      .card {
+        padding: 28px 26px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      .card h2 {
+        margin-bottom: 14px;
+        font-size: 1.35rem;
+      }
+
+      .card h3 {
+        margin-top: 28px;
+        margin-bottom: 12px;
+        font-size: 1.06rem;
+      }
+
+      p {
+        margin: 0;
+        line-height: 1.8;
+      }
+
+      .kicker {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--accent-warm);
+        font-size: 0.84rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.2rem;
+        line-height: 1.85;
+      }
+
+      li + li {
+        margin-top: 8px;
+      }
+
+      .mermaid-shell {
+        padding: 18px;
+        border-radius: 20px;
+        background: #f9f6ee;
+        border: 1px solid rgba(85, 107, 47, 0.14);
+      }
+
+      .mermaid {
+        overflow-x: auto;
+      }
+
+      .quote {
+        padding: 18px 20px;
+        border-left: 4px solid var(--accent-warm);
+        border-radius: 0 18px 18px 0;
+        background: rgba(215, 141, 70, 0.08);
+        color: #4f4026;
+      }
+
+      .section {
+        margin-top: 22px;
+      }
+
+      .footer {
+        margin-top: 24px;
+        padding: 18px 20px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 960px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .page {
+          padding: 20px 14px 56px;
+        }
+
+        .hero,
+        .card {
+          padding: 22px 18px;
+          border-radius: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <span class="eyebrow">Meeting Memo</span>
+        <h1>03-06 内部会议纪要：AI 在法律实务中的应用</h1>
+        <p class="lead">
+          这份纪要基于现有转写文本整理，核心不是罗列工具，而是回到法律服务的第一性原理：
+          律师工作的价值链，本质上是把复杂事实转化为结构化判断与可交付文本。AI
+          适合进入中间加工层，但最终判断、策略和责任仍由律师承担。
+        </p>
+        <div class="meta">
+          <div class="meta-card">
+            <strong>整理范围</strong>
+            <span>当前文本内容截至 00:18:40</span>
+          </div>
+          <div class="meta-card">
+            <strong>会议主题</strong>
+            <span>AI 在律师高频工作中的应用与团队落地</span>
+          </div>
+          <div class="meta-card">
+            <strong>整理方法</strong>
+            <span>Mermaid 流程图 + Markdown 式要点 + 第一性原理拆解</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <span class="kicker">Core Thesis</span>
+          <h2>一句话结论</h2>
+          <p>
+            AI 在法律实务中的核心价值，不是替律师承担判断责任，而是把大量可结构化、
+            可模板化、可重复的中间劳动压缩到分钟级；律师仍然负责问题定义、策略取舍、
+            结果校验与执业责任。
+          </p>
+
+          <div class="section">
+            <h3>第一性原理拆解</h3>
+            <ul>
+              <li>输入层：事实材料、证据、案例、合同、客户诉求。</li>
+              <li>处理层：结构化、归纳、比对、匹配规则、形成论证。</li>
+              <li>输出层：表格、咨询意见、服务方案、报告、协议、答辩状、报价函。</li>
+              <li>律师不可外包的核心：责任判断、策略选择、风险兜底、最终签发。</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h3>AI 真正适合的环节</h3>
+            <ul>
+              <li>高重复。</li>
+              <li>高格式化。</li>
+              <li>高信息密度。</li>
+              <li>对速度敏感，但允许人工复核。</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h3>AI 不能省略的动作</h3>
+            <ul>
+              <li>给足背景、角色、格式和口径。</li>
+              <li>用模板约束输出。</li>
+              <li>持续追问补漏，避免偷项和漏项。</li>
+              <li>对结果做事实与法律校验。</li>
+              <li>处理隐私、删除敏感数据、控制留痕。</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">Mermaid</span>
+          <h2>法律实务中的 AI 提效流程</h2>
+          <div class="mermaid-shell">
+            <pre class="mermaid">
+flowchart TD
+    A[律师工作的第一性原理] --> B[接收材料: 发票/案例/证据/客户咨询]
+    B --> C[结构化任务: 字段提取/争点归纳/角色设定/输出格式]
+    C --> D[AI 生成初稿: 表格/分析报告/报价函/服务报告/协议/答辩状]
+    D --> E[人工纠偏: 模板约束/补充指令/漏项检查]
+    E --> F[多模型对比: 豆包/元宝/其他工具]
+    F --> G[专业审查: 法律判断/证据取舍/风险承担]
+    G --> H[客户交付]
+    H --> I[敏感信息删除与留痕控制]
+            </pre>
+          </div>
+
+          <div class="section quote">
+            本次会议传达的重点不是“哪个工具最强”，而是“律师是否真正把 AI 放进真实工作流里反复使用、比较和校验”。
+          </div>
+        </article>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <span class="kicker">Use Cases</span>
+          <h2>会议主要内容</h2>
+
+          <h3>1. 发票整理</h3>
+          <ul>
+            <li>过去依赖人工逐张登记，耗时且枯燥。</li>
+            <li>现在可一次上传约 50 张 PDF 发票，让 AI 按固定字段抽取信息。</li>
+            <li>关键在于给出模板，并明确“每一份不能少”，防止模型漏票、漏字段。</li>
+            <li>工具已从文本整理进化到可直接生成 Excel。</li>
+            <li>这是最适合优先标准化、优先 AI 化的场景。</li>
+          </ul>
+
+          <h3>2. 案例批量归纳</h3>
+          <ul>
+            <li>从无讼、威科等系统下载大量案例后，AI 可统一提取判决时间、法院、案情、争议焦点、证据和裁判结果。</li>
+            <li>进一步可按原告、被告、胜诉点或特定争议点继续筛取论据。</li>
+            <li>AI 的价值不只是“摘要”，而是帮助从案例堆中提炼可诉可辩的抓手。</li>
+            <li>风险在于批量上传不等于批量完整输出，仍需补充指令与人工核验。</li>
+          </ul>
+
+          <h3>3. 法律文书写作</h3>
+          <ul>
+            <li>适用于报价函、服务方案、服务报告、咨询回复、协议草案、答辩状等。</li>
+            <li>基本方法是上传旧模板，补充项目背景、客户需求、角色定位和输出口径。</li>
+            <li>很多初稿能在 1 到 5 分钟内完成，之后主要做格式和措辞修正。</li>
+            <li>AI 最适合做高质量初稿引擎，不适合替代律师的立场设计与责任承担。</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <span class="kicker">Adoption</span>
+          <h2>组织层面的判断</h2>
+
+          <h3>4. 问题不在工具少，而在没有真正下场</h3>
+          <ul>
+            <li>现场反馈显示，经常用 AI 做完整 PPT 或长流程任务的人并不多。</li>
+            <li>在同一步工作里同时使用 3 个以上 AI 的人更少。</li>
+            <li>单点使用某一个工具，只能拿到局部收益。</li>
+            <li>真正的竞争力来自进入真实工作流、持续试错、横向比较多个模型输出。</li>
+          </ul>
+
+          <h3>5. 行业背景与压力</h3>
+          <ul>
+            <li>律师行业普遍面临案源不稳定、获客压力大、同质化严重。</li>
+            <li>AI 的价值不只是节省文书时间，也包括提升营销展示、检索响应和团队协同速度。</li>
+            <li>会议的真实命题是：如何把 AI 从演示工具，升级为生产工具。</li>
+          </ul>
+
+          <h3>6. 从会议抽出的共识</h3>
+          <ul>
+            <li>提效不来自单句神奇提示词，而来自“材料 + 模板 + 明确字段 + 角色设定 + 连续追问 + 人工复核”的组合。</li>
+            <li>模型会偷懒、漏项、跑偏，律师不能把校验环节外包。</li>
+            <li>单一工具不是终局，多模型对比和经验判断才会形成稳定工作流。</li>
+            <li>AI 可以压缩初级重复劳动，但不能替代律师对事实真实性、法律适用和执业责任的承担。</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <span class="kicker">Workflow</span>
+          <h2>可直接落地的工作流</h2>
+          <ul>
+            <li>第 1 步：先判断任务类型，是抽取、归纳、检索、写作还是策略分析。</li>
+            <li>第 2 步：准备输入材料，包括原始文件、案例包、证据、旧模板和背景说明。</li>
+            <li>第 3 步：定义输出标准，写清字段、结构、角色、语气、篇幅和格式。</li>
+            <li>第 4 步：先出初稿，再追问补漏，明确“不能漏任何一项”。</li>
+            <li>第 5 步：做交叉验证，用第二个模型或人工抽检核对。</li>
+            <li>第 6 步：由律师完成专业定稿、修改与签发。</li>
+            <li>第 7 步：处理合规收尾，删除敏感信息并控制留痕。</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <span class="kicker">Next</span>
+          <h2>建议的后续动作</h2>
+          <ul>
+            <li>把发票登记、案例归纳、报价函、服务报告、答辩状分别沉淀成统一提示词模板。</li>
+            <li>为每个场景建立“必填字段 + 常见漏项检查清单”。</li>
+            <li>在团队内确定至少 2 到 3 个常用模型做交叉验证。</li>
+            <li>对涉及客户隐私的材料，形成脱敏、上传、删除的操作规范。</li>
+            <li>从“个人会用”升级到“团队并行协作”，把检索、摘要、文书起草嵌入日常流程。</li>
+          </ul>
+
+          <div class="section">
+            <h3>纪要式结论</h3>
+            <ul>
+              <li>本次会议不是在讨论 AI 要不要用，而是在讨论律师团队如何把 AI 从演示工具变成生产工具。</li>
+              <li>高频、重复、格式化的法律工作最先值得标准化和 AI 化。</li>
+              <li>下一阶段重点不在继续听概念，而在沉淀模板、建立校验机制、推进团队落地。</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <div class="footer">
+        注：本纪要基于当前提供的转写文本整理，原始文本在发言人 2 进一步展开前结束，因此本文重点提炼已出现的共识、方法和场景。
+      </div>
+    </main>
+
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          primaryColor: "#dbe7c5",
+          primaryTextColor: "#172119",
+          primaryBorderColor: "#556b2f",
+          lineColor: "#556b2f",
+          secondaryColor: "#f4ecdc",
+          tertiaryColor: "#fffdf8",
+          fontFamily: "IBM Plex Sans SC, PingFang SC, Source Han Sans SC, sans-serif"
+        },
+        flowchart: {
+          curve: "bumpX",
+          nodeSpacing: 36,
+          rankSpacing: 48,
+          htmlLabels: true
+        }
+      });
+    </script>
+  </body>
+</html>
